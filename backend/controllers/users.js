@@ -1,3 +1,4 @@
+const { JWT_SECRET, NODE_ENV } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const ExistEmailError = require('../error/ExistEmailError');
@@ -14,11 +15,7 @@ module.exports.login = (req, res, next) => {
   }
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        'secret1993key',
-        { expiresIn: '7d' },
-      );
+      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum'}`, { expiresIn: '7d' });
       return res.status(200).send({ token });
     })
     .catch(() => {
