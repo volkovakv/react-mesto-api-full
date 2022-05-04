@@ -12,12 +12,20 @@ _checkResult(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
+_getHeaders() {
+  const jwt = localStorage.getItem('jwt');
+  return {
+    'Authorization': `Bearer ${jwt}`,
+    ...this._headers,
+  };
+}
+
 // методы работы с Api
 // информация bio с сервера
   getUserInfo() {
     const requestUrl = this._baseUrl + '/users/me';
     return fetch(requestUrl, {
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
   }
@@ -26,7 +34,7 @@ _checkResult(res) {
   getInitialCards() {
     const requestUrl = this._baseUrl + '/cards';
     return fetch(requestUrl, {
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
   }
@@ -41,7 +49,7 @@ _checkResult(res) {
     const requestUrl = this._baseUrl + '/users/me';
     return fetch(requestUrl, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({
         name: inputValues.name,
         about: inputValues.about
@@ -55,7 +63,7 @@ _checkResult(res) {
     const requestUrl = this._baseUrl + '/cards';
     return fetch(requestUrl, {
       method: 'POST',
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify(inputValues),
     })
     .then((res) => this._checkResult(res));
@@ -66,7 +74,7 @@ _checkResult(res) {
     const requestUrl = this._baseUrl + `/cards/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
   }
@@ -76,7 +84,7 @@ _checkResult(res) {
     const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'PUT',
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
   }
@@ -86,7 +94,7 @@ _checkResult(res) {
     const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
   }
@@ -97,7 +105,7 @@ _checkResult(res) {
     console.log(inputValues);
     return fetch(requestUrl, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({
         avatar: inputValues.avatar
       })
@@ -109,7 +117,6 @@ _checkResult(res) {
 const api = new Api({
   baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work/',
   headers: {
-    authorization: 'bec6b997-2386-4c6a-ada4-c66881ffbfb4',
     'Content-Type': 'application/json'
   }
 }); 
