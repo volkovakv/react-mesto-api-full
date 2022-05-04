@@ -6,4 +6,4 @@
 
 ## Ссылки:
 - Frontend: mesto.frontend.volkovakv.nomoredomains.work
-- Backend: mesto.backend.volkovakv.nomoredomains.work/
+- Backend: mesto.backend.volkovakv.nomoredomains.work
