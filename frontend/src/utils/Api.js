@@ -107,7 +107,7 @@ _checkResult(res) {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-34',
+  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work/',
   headers: {
     authorization: 'bec6b997-2386-4c6a-ada4-c66881ffbfb4',
     'Content-Type': 'application/json'
