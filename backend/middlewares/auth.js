@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const IdError = require('../error/IdError');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -12,7 +14,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'secret1993key');
+    payload = jwt.verify(token, `${NODE_ENV === 'production' ? JWT_SECRET : 'eb28135ebcfc17578f96d4d65b6c7871f2c803be4180c165061d5c2db621c51b'}`);
   } catch (err) {
     next(new IdError('Ошибка авторизации: не получилось верифицировать токен'));
   }
