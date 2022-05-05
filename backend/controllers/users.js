@@ -38,9 +38,6 @@ module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  if (!email || !password) {
-    next(new RequestError('Не переданы email или пароль'));
-  }
   bcrypt
     .hash(password, 15)
     .then((hash) => User.create({
