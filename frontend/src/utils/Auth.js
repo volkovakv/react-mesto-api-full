@@ -6,7 +6,7 @@ function checkResult(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-export const BASE_URL = "http://mesto.backend.volkovakv.nomoredomains.work/";
+export const BASE_URL = "http://mesto.backend.volkovakv.nomoredomains.work";
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
