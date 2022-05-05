@@ -81,7 +81,7 @@ _getHeaders() {
 
   // установка лайка
   addLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
+    const requestUrl = this._baseUrl + `/cards/${cardId}/likes`;
     return fetch(requestUrl, {
       method: 'PUT',
       headers: this._getHeaders(),
@@ -91,7 +91,7 @@ _getHeaders() {
 
   // снятие лайка
   deleteLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
+    const requestUrl = this._baseUrl + `/cards/${cardId}/likes`;
     return fetch(requestUrl, {
       method: 'DELETE',
       headers: this._getHeaders(),
