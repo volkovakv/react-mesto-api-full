@@ -68,7 +68,7 @@ module.exports.createUser = (req, res, next) => {
       } else {
         next(err);
       }
-      console.log(err.message);
+      console.log(err);
     });
 };
 
