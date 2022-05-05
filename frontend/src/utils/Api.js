@@ -115,7 +115,7 @@ _getHeaders() {
 }
 
 const api = new Api({
-  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work/',
+  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work',
   headers: {
     'Content-Type': 'application/json'
   }
