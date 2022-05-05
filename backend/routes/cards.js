@@ -5,8 +5,8 @@ const {
   getCards, createCard, deleteCard, likeCard, dislikeCard,
 } = require('../controllers/cards');
 
-cardsRouter.get('/', getCards);
-cardsRouter.post('/', celebrate({
+cardsRouter.get('/cards', getCards);
+cardsRouter.post('/cards', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
     link: Joi.string().min(2).required()
@@ -16,17 +16,17 @@ cardsRouter.post('/', celebrate({
   }),
 }), createCard);
 
-cardsRouter.delete('/:cardId', celebrate({
+cardsRouter.delete('/cards/:cardId', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
 }), deleteCard);
-cardsRouter.put('/:cardId/likes', celebrate({
+cardsRouter.put('/cards/:cardId/likes', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
 }), likeCard);
-cardsRouter.delete('/:cardId/likes', celebrate({
+cardsRouter.delete('/cards/:cardId/likes', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
