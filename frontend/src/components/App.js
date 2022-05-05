@@ -9,6 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/Api';
+import * as auth from "../utils/auth";
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import Register from './Register';
@@ -50,7 +51,7 @@ function App() {
 
   React.useEffect(() => {
     if (token) {
-      return getToken(token)
+      auth.getToken(token)
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
@@ -65,7 +66,7 @@ function App() {
 
   {/* регистрация на сайте */}
   function onRegister(email, password){
-    return register(email, password)
+    auth.register(email, password)
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
@@ -86,7 +87,7 @@ function App() {
 
   {/* вход на сайт */}
   function onLogin(email, password){
-    return login(email, password)
+    auth.login(email, password)
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
