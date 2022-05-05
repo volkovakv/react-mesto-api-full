@@ -1,7 +1,7 @@
 const allowedCors = [
-  'localhost:3000',
-  'mesto.frontend.volkovakv.nomoredomains.work',
-  'mesto.backend.volkovakv.nomoredomains.work',
+  'http://localhost:3000',
+  'http://mesto.frontend.volkovakv.nomoredomains.work',
+  'http://mesto.backend.volkovakv.nomoredomains.work',
 ];
 
 const cors = (req, res, next) => {

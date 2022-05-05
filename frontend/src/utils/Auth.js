@@ -1,4 +1,4 @@
-//обработка ответа сервера
+//обработка ответа сервер
 function checkResult(res) {
   if (res.ok) {
     return res.json();
