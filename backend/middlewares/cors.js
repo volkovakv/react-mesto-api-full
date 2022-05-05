@@ -1,5 +1,5 @@
 const allowedCors = [
-  'localhost:3000',
+  'http://ocalhost:3000',
   'mesto.frontend.volkovakv.nomoredomains.work',
   'mesto.backend.volkovakv.nomoredomains.work',
 ];

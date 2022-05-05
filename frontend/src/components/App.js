@@ -72,7 +72,7 @@ function App() {
           setMessageImage(picSuccess);
           setMessageText("Вы успешно зарегистрировались!");
           handleInfoTooltip();
-          history.push('/sign-in');
+          history.push('/signin');
         }
       })
       .catch(() => {
@@ -80,7 +80,7 @@ function App() {
         setMessageImage(picFail);
         setMessageText("Что-то пошло не так! Попробуйте ещё раз.");
         handleInfoTooltip();
-        history.push('/sign-up');
+        history.push('/signup');
       });
   };
 
@@ -226,11 +226,11 @@ function App() {
       <div className="page">
         <div className="page__container">
         <Switch>
-          <Route path="/sign-in">
+          <Route path="/signin">
             <>
               <Header 
                 title="Регистрация" 
-                route="/sign-up"
+                route="/signup"
               />
               <Login 
                 onLogin={onLogin} 
@@ -238,11 +238,11 @@ function App() {
             </>
           </Route>
 
-          <Route path="/sign-up">
+          <Route path="/signup">
             <>
               <Header 
                 title="Войти" 
-                route="/sign-in"
+                route="/signin"
               />
               <Register 
                 onRegister={onRegister} 
@@ -274,7 +274,7 @@ function App() {
           </Route>
 
           <Route path="*">
-            <Redirect to={isLoggedIn ? "/" : "/sign-in"}/>
+            <Redirect to={isLoggedIn ? "/" : "/signin"}/>
           </Route>
         </Switch>
       
