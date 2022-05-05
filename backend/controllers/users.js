@@ -15,7 +15,7 @@ module.exports.login = (req, res, next) => {
   }
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'eb28135ebcfc17578f96d4d65b6c7871f2c803be4180c165061d5c2db621c51b'}`, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum'}`, { expiresIn: '7d' });
       return res.status(200).send({ token });
     })
     .catch(() => {
@@ -63,7 +63,8 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new RequestError('Некорректные данные пользователя'));
-      } else if (err.code === 11000) {
+      }
+      if (err.code === 11000) {
         next(new ExistEmailError('Пользователь с таким email зарегистрирован'));
       } else {
         next(err);

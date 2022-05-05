@@ -81,7 +81,7 @@ _getHeaders() {
 
   // установка лайка
   addLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/${cardId}/likes`;
+    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'PUT',
       headers: this._getHeaders(),
@@ -91,7 +91,7 @@ _getHeaders() {
 
   // снятие лайка
   deleteLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/${cardId}/likes`;
+    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
     return fetch(requestUrl, {
       method: 'DELETE',
       headers: this._getHeaders(),
@@ -115,7 +115,7 @@ _getHeaders() {
 }
 
 const api = new Api({
-  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work',
+  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work/',
   headers: {
     'Content-Type': 'application/json'
   }
