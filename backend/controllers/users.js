@@ -38,9 +38,6 @@ module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  if (!email || !password) {
-    next(new RequestError('Не переданы email или пароль'));
-  }
   bcrypt
     .hash(password, 15)
     .then((hash) => User.create({
@@ -61,13 +58,13 @@ module.exports.createUser = (req, res, next) => {
       });
     })
     .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new RequestError('Некорректные данные пользователя'));
+      }
       if (err.code === 11000) {
         next(new ExistEmailError('Пользователь с таким email зарегистрирован'));
       } else {
         next(err);
-      }
-      if (err.name === 'ValidationError') {
-        next(new RequestError('Некорректные данные пользователя'));
       }
     });
 };
