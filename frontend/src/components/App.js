@@ -105,7 +105,7 @@ function App() {
     if (isLoggedIn === true) {
       history.push('/');
     }
-  }, [history, isLoggedIn]);
+  }, [isLoggedIn, history]);
 
   {/* лайк карточки */}
   function handleCardLike(card) {
