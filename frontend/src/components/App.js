@@ -37,7 +37,7 @@ function App() {
     if (isLoggedIn === true) {
       Promise.all([api.getUserInfo(), api.getInitialCards()])
         .then(([user, cards]) => {
-          setCurrentUser(user.user);
+          setCurrentUser(user.data);
           setCards(cards);
         })
         .catch(() => {
