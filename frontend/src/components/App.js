@@ -34,21 +34,6 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (isLoggedIn === true) {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
-        .then(([user, cards]) => {
-          setCurrentUser(user.data);
-          setCards(cards);
-        })
-        .catch(() => {
-          setMessageImage(picFail);
-          setMessageText('Что-то пошло не так! Ошибка при авторизации.');
-          handleInfoTooltip();
-        });
-  }
- },[]);
-
-  React.useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
       auth.getToken(token)
@@ -63,6 +48,21 @@ function App() {
       });
     }
   }, []);
+
+  React.useEffect(() => {
+    if (isLoggedIn === true) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user.data);
+          setCards(cards);
+        })
+        .catch(() => {
+          setMessageImage(picFail);
+          setMessageText('Что-то пошло не так! Ошибка при авторизации.');
+          handleInfoTooltip();
+        });
+  }
+ },[]);
 
   {/* регистрация на сайте */}
   function onRegister(email, password){
