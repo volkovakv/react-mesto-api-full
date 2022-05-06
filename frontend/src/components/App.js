@@ -51,18 +51,9 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn === true) {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
-        .then(([user, cards]) => {
-          setCurrentUser(user.data);
-          setCards(cards);
-        })
-        .catch(() => {
-          setMessageImage(picFail);
-          setMessageText('Что-то пошло не так! Ошибка при авторизации.');
-          handleInfoTooltip();
-        });
-  }
- },[]);
+      history.push('/');
+    }
+  }, [isLoggedIn, history]);
 
   {/* регистрация на сайте */}
   function onRegister(email, password){
@@ -100,16 +91,25 @@ function App() {
         handleInfoTooltip();
       });
   }
- 
+
   React.useEffect(() => {
     if (isLoggedIn === true) {
-      history.push('/');
-    }
-  }, [isLoggedIn, history]);
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user.data);
+          setCards(cards);
+        })
+        .catch(() => {
+          setMessageImage(picFail);
+          setMessageText('Что-то пошло не так! Ошибка при авторизации.');
+          handleInfoTooltip();
+        });
+  }
+ },[isLoggedIn]);
 
   {/* лайк карточки */}
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
       if (!isLiked) {
         api
           .addLike(card._id)
@@ -168,7 +168,11 @@ function App() {
     api
       .editProfile(inputValues)
       .then(res => {
-        setCurrentUser(res);
+        setCurrentUser({
+          ...currentUser,
+          name: res.name,
+          about: res.about
+        });
         closeAllPopups();
       })
       .catch(err => console.log(err))
@@ -179,7 +183,10 @@ function App() {
     api
       .updateProfileAvatar(inputValues)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser({
+          ...currentUser,
+          avatar: res.avatar
+        });
         closeAllPopups();
       })
       .catch((err) => {
