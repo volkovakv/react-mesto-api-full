@@ -6,11 +6,11 @@ function checkResult(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-export const BASE_URL = 'http://mesto.backend.volkovakv.nomoredomains.work';
+export const BASE_URL = 'https://mesto.backend.volkovakv.nomoredomains.work';
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export function register(email, password) {
 
 export function login(email, password) {
   return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Typ': 'application/json',
@@ -34,7 +34,7 @@ export function login(email, password) {
 
 export function getToken(jwt) {
   return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
+    method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

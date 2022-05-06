@@ -11,11 +11,11 @@ const User = require('../models/user');
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    next(new RequestError('Требуется ввести почту; и пароль'));
+    next(new RequestError('Требуется ввести почту и пароль'));
   }
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum'}`, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, `${NODE_ENV === 'production' ? JWT_SECRET : 'eb28135ebcfc17578f96d4d65b6c7871f2c803be4180c165061d5c2db621c51b'}`, { expiresIn: '7d' });
       return res.status(200).send({ token });
     })
     .catch(() => {

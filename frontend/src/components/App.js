@@ -12,10 +12,10 @@ import api from '../utils/Api';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import Register from './Register';
-import { register, login, getToken } from '../utils/Auth';
 import picSuccess from '../images/success.png';
 import picFail from '../images/fail.png'
 import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/Auth';
 
 function App() {  
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
@@ -33,24 +33,25 @@ function App() {
 
   const history = useHistory();
 
-  const token = localStorage.getItem("jwt");
-
   React.useEffect(() => {
-    if (token) {
-      return Promise.all([api.getUserInfo(), api.getInitialCards()])
-    .then(([user, cards]) => {
-      setCurrentUser(user);
-      setCards(cards);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    if (isLoggedIn === true) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch(() => {
+          setMessageImage(picFail);
+          setMessageText('Что-то пошло не так! Ошибка при авторизации.');
+          handleInfoTooltip();
+        });
   }
  },[]);
 
   React.useEffect(() => {
+    const token = localStorage.getItem('jwt');
     if (token) {
-      return getToken(token)
+      auth.getToken(token)
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
@@ -65,20 +66,18 @@ function App() {
 
   {/* регистрация на сайте */}
   function onRegister(email, password){
-    return register(email, password)
+    auth.register(email, password)
       .then((res) => {
         if (res) {
-          setIsLoggedIn(true);
           setMessageImage(picSuccess);
-          setMessageText("Вы успешно зарегистрировались!");
+          setMessageText('Вы успешно зарегистрировались!');
           handleInfoTooltip();
           history.push('/signin');
         }
       })
       .catch(() => {
-        setIsLoggedIn(false);
         setMessageImage(picFail);
-        setMessageText("Что-то пошло не так! Попробуйте ещё раз.");
+        setMessageText('Что-то пошло не так! Попробуйте ещё раз.');
         handleInfoTooltip();
         history.push('/signup');
       });
@@ -86,23 +85,24 @@ function App() {
 
   {/* вход на сайт */}
   function onLogin(email, password){
-    return login(email, password)
+    auth.login(email, password)
       .then((res) => {
-        if (res.token) {
+        if (res) {
           localStorage.setItem('jwt', res.token);
           setIsLoggedIn(true);
+          setEmail(email);
           history.push('/');
         }
       })
       .catch(() => {
-        setIsLoggedIn(false);
         setMessageImage(picFail);
-        setMessageText("Что-то пошло не так! Попробуйте ещё раз.");
+        setMessageText('Неправильная почта или пароль');
+        handleInfoTooltip();
       });
   }
  
   React.useEffect(() => {
-    if (token) {
+    if (isLoggedIn === true) {
       history.push('/');
     }
   }, [history, isLoggedIn]);
@@ -218,19 +218,19 @@ function App() {
     setIsLoggedIn(false);
     setEmail(null);
     history.push('/sign-in');
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
   }
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <div className="page__container">
+      <div className='page'>
+        <div className='page__container'>
         <Switch>
-          <Route path="/signin">
+          <Route path='/signin'>
             <>
               <Header 
-                title="Регистрация" 
-                route="/signup"
+                title='Регистрация' 
+                route='/signup'
               />
               <Login 
                 onLogin={onLogin} 
@@ -238,11 +238,11 @@ function App() {
             </>
           </Route>
 
-          <Route path="/signup">
+          <Route path='/signup'>
             <>
               <Header 
-                title="Войти" 
-                route="/signin"
+                title='Войти' 
+                route='/signin'
               />
               <Register 
                 onRegister={onRegister} 
@@ -250,12 +250,12 @@ function App() {
             </>
           </Route>
 
-          <Route exact path="/">
+          <Route exact path='/'>
             <>
               <Header 
-                title="Выйти" 
+                title='Выйти' 
                 mail={email} 
-                route=""
+                route=''
                 onClick={onSignOut}
               />
               <ProtectedRoute
@@ -273,8 +273,8 @@ function App() {
             </>
           </Route>
 
-          <Route path="*">
-            <Redirect to={isLoggedIn ? "/" : "/signin"}/>
+          <Route path='*'>
+            <Redirect to={isLoggedIn ? '/' : '/signin'}/>
           </Route>
         </Switch>
       

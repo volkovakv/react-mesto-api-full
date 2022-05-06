@@ -23,8 +23,7 @@ _getHeaders() {
 // методы работы с Api
 // информация bio с сервера
   getUserInfo() {
-    const requestUrl = this._baseUrl + '/users/me';
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
@@ -32,8 +31,7 @@ _getHeaders() {
 
   // карточки с сервера
   getInitialCards() {
-    const requestUrl = this._baseUrl + '/cards';
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._getHeaders(),
     })
     .then((res) => this._checkResult(res));
@@ -46,8 +44,7 @@ _getHeaders() {
 
   // редактирование данных пользователя
   editProfile(inputValues) {
-    const requestUrl = this._baseUrl + '/users/me';
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._getHeaders(),
       body: JSON.stringify({
@@ -60,8 +57,7 @@ _getHeaders() {
 
   // добавление новой карточки
   addNewCard(inputValues) {
-    const requestUrl = this._baseUrl + '/cards';
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._getHeaders(),
       body: JSON.stringify(inputValues),
@@ -71,8 +67,7 @@ _getHeaders() {
 
   // удаление карточки
   deleteCard(cardId) {
-    const requestUrl = this._baseUrl + `/cards/${cardId}`;
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
     })
@@ -81,8 +76,7 @@ _getHeaders() {
 
   // установка лайка
   addLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._getHeaders(),
     })
@@ -91,8 +85,7 @@ _getHeaders() {
 
   // снятие лайка
   deleteLike(cardId) {
-    const requestUrl = this._baseUrl + `/cards/likes/${cardId}`;
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._getHeaders(),
     })
@@ -101,9 +94,7 @@ _getHeaders() {
 
   // обновление аватара
   updateProfileAvatar(inputValues) {
-    const requestUrl = this._baseUrl + `/users/me/avatar`;
-    console.log(inputValues);
-    return fetch(requestUrl, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._getHeaders(),
       body: JSON.stringify({
@@ -115,7 +106,7 @@ _getHeaders() {
 }
 
 const api = new Api({
-  baseUrl: 'http://mesto.backend.volkovakv.nomoredomains.work',
+  baseUrl: 'https://mesto.backend.volkovakv.nomoredomains.work',
   headers: {
     'Content-Type': 'application/json'
   }
